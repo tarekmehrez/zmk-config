@@ -2,6 +2,14 @@
  * Copyright (c) 2020 The ZMK Contributors
  *
  * SPDX-License-Identifier: MIT
+ *
+ * Converted from QMK layout (mechboards/crkbd/pro tiko_v0)
+ *
+ * Layer map:
+ *   0: QWERTY (base)
+ *   1: NAV    (arrows, media, numbers) — hold Space
+ *   2: SYM    (symbols)               — hold Backspace
+ *   3: SYS    (RGB, boot)             — hold both layer keys
  */
 
 #include <behaviors.dtsi>
@@ -19,49 +27,74 @@
     keymap {
         compatible = "zmk,keymap";
 
+        // ┌─────┬───┬───┬───┬───┬───┬──────┬──────┬───┬───┬───┬───┬───┬──────┐
+        // │ ESC │ Q │ W │ E │ R │ T │ MUTE │  PP  │ Y │ U │ I │ O │ P │  -   │
+        // ├─────┼───┼───┼───┼───┼───┼──────┼──────┼───┼───┼───┼───┼───┼──────┤
+        // │  `  │ A │ S │ D │ F │ G │ LALT │ RALT │ H │ J │ K │ L │ ; │  '   │
+        // ├─────┼───┼───┼───┼───┼───┴──────┴──────┴───┼───┼───┼───┼───┼──────┤
+        // │ GUI │ Z │ X │ C │ V │ B │                 │ N │ M │ , │ . │ / │ \ │
+        // └─────┴───┴───┼───┼───────┼─────────────────┼───┼───┼───┘
+        //               │ — │LT2 BS │  SFT/ENT        │SFT/TAB│LT1 SPC│ — │
         default_layer {
             display-name = "QWERTY";
-            // --------------------------------------------------------------------------------
-            // |  TAB |  Q  |  W  |  E  |  R  |  T  |  MUTE |  PP   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-            // | CTRL |  A  |  S  |  D  |  F  |  G  |  LALT |  RALT |  H  |  J   |  K  |  L  |  ;  |  '   |
-            // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
-            //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
             bindings = <
-                &kp TAB   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-                &kp LCTRL &kp A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                      &kp LGUI &mo 1 &kp SPACE              &kp RET &mo 2 &kp RALT
+                &kp ESC   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp MINUS
+                &kp GRAVE &kp A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+                &kp LGUI  &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp BSLH
+                                &none &lt 2 BSPC &mt LSHFT RET   &mt RSHFT TAB &lt 1 SPACE &none
             >;
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN &inc_dec_kp C_PREV C_NEXT &inc_dec_kp C_BRI_DN C_BRI_UP>;
-        };
-
-        lower_layer {
-            display-name = "NUMBER";
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  1  |  2  |  3  |  4  |  5    |  LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  | BSPC |
-            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
-            //                    | GUI |     | SPC   |        | ENT   |     | ALT |
-            bindings = <
-                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &trans
-                                                       &kp LGUI     &trans       &kp SPACE                        &kp LGUI &trans   &kp SPACE
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_DN C_VOL_UP
+                &inc_dec_kp PG_UP PG_DN
+                &inc_dec_kp C_PREV C_NEXT
+                &inc_dec_kp C_BRI_DN C_BRI_UP
             >;
         };
 
-        raise_layer {
-            display-name = "SYMBOL";
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  !  |  @  |  #  |  $  |  %  | LCTRL | RCTRL |  ^  |  &  |  *  |  (  |  )  | BSPC |
-            // | CTRL |     |     |     |     |     |  LALT | RALT  |  -  |  =  |  [  |  ]  |  \  |  `   |
-            // | SHFT |     |     |     |     |     |               |  _  |  +  |  {  |  }  | "|" |  ~   |
-            //                    | GUI |     | SPC |               | ENT |     | ALT |
+        // ┌─────┬───┬───┬───┬───┬───┬───┬───┬───┬──────┬──────┬─────┬───┬──────┐
+        // │ TAB │ 1 │ 2 │ 3 │ 4 │ 5 │   │   │ 6 │  7   │  8   │  9  │ 0 │ BSPC │
+        // ├─────┼───┼───┼───┼───┼───┼───┼───┼───┼──────┼──────┼─────┼───┼──────┤
+        // │LCTL │   │   │MUT│VDN│VUP│   │   │PGU│ HOME │  UP  │ END │   │      │
+        // ├─────┼───┼───┼───┼───┼───┴───┴───┴───┼──────┼──────┼─────┼───┼──────┤
+        // │ GUI │   │PRV│NXT│STP│PLY│           │PGD│ LEFT │ DOWN │ RIGHT│   │  │
+        // └─────┴───┴───┼───┼───────┼───────────┼───┼──────┼───┘
+        //               │ — │  ——   │    SPC    │ENT│ MO3  │ RALT │
+        nav_layer {
+            display-name = "NAV";
             bindings = <
-                &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT &kp LCTRL &kp RCTRL &kp CARET &kp AMPS &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-                &kp LCTRL &trans   &trans &trans   &trans   &trans    &kp LALT  &kp RALT  &kp MINUS &kp EQUAL &kp LBKT &kp RBKT &kp BSLH &kp GRAVE
-                &kp LSHFT &trans   &trans &trans   &trans   &trans                        &kp UNDER &kp PLUS  &kp LBRC &kp RBRC &kp PIPE &kp TILDE
-                                          &kp LGUI &trans   &kp SPACE                     &kp RET   &trans    &kp RALT
+                &kp TAB   &kp N1 &kp N2     &kp N3     &kp N4   &kp N5   &trans &trans &kp N6    &kp N7   &kp N8   &kp N9    &kp N0 &kp BSPC
+                &kp LCTRL &none  &none      &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &trans &trans &kp PG_UP &kp HOME &kp UP   &kp END   &none  &none
+                &kp LGUI  &none  &kp C_PREV &kp C_NEXT &kp C_STOP  &kp C_PP                   &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &none  &none
+                                 &none      &trans     &kp SPACE               &kp RET &mo 3 &kp RALT
+            >;
+        };
+
+        // ┌─────┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬──────┐
+        // │ TAB │ ! │ @ │ # │ $ │ % │   │   │ ^ │ & │ * │ ( │ ) │ BSPC │
+        // ├─────┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼──────┤
+        // │LCTL │   │   │   │   │   │   │   │ - │ = │ [ │ ] │ \ │  `   │
+        // ├─────┼───┼───┼───┼───┼───┴───┴───┴───┼───┼───┼───┼───┼──────┤
+        // │LSFT │   │   │   │   │   │           │ _ │ + │ { │ } │ | │ ~ │
+        // └─────┴───┴───┼───┼───────┼───────────┼───┼───┼───┘
+        //               │ — │ MO3   │    SPC    │ENT│ ——│ RALT │
+        sym_layer {
+            display-name = "SYM";
+            bindings = <
+                &kp TAB   &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT &trans &trans &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
+                &kp LCTRL &none    &none  &none    &none    &none     &trans &trans &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
+                &kp LSHFT &none    &none  &none    &none    &none                  &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
+                                   &none  &mo 3    &kp SPACE               &kp RET &trans &kp RALT
+            >;
+        };
+
+        // RGB controls + boot (reached by holding both layer keys simultaneously)
+        sys_layer {
+            display-name = "SYS";
+            bindings = <
+                &bootloader     &none           &none           &none           &none &none &trans &trans &none &none &none &none &none &none
+                &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_VAI &none &none &trans &trans &none &none &none &none &none &none
+                &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_VAD &none &none              &none &none &none &none &none &studio_unlock
+                                                &kp LGUI        &trans          &kp SPACE     &kp RET &trans &kp RALT
             >;
         };
 
@@ -71,7 +104,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -81,7 +114,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -91,7 +124,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -101,7 +134,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -111,7 +144,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -121,7 +154,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
     };
