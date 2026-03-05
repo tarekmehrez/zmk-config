@@ -14,13 +14,10 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
 
 / {
-    chosen {
-        zmk,physical-layout = &default_layout;
-    };
+    chosen { zmk,physical-layout = &default_layout; };
 };
 
 / {
@@ -35,14 +32,16 @@
         // │ GUI │ Z │ X │ C │ V │ B │                 │ N │ M │ , │ . │ / │ \ │
         // └─────┴───┴───┼───┼───────┼─────────────────┼───┼───┼───┘
         //               │ — │LT2 BS │  SFT/ENT        │SFT/TAB│LT1 SPC│ — │
+
         default_layer {
             display-name = "QWERTY";
             bindings = <
-                &kp ESC   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp MINUS
-                &kp GRAVE &mt LALT A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-                &kp LGUI  &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp BSLH
-                                &none &lt 2 BSPC &mt LSHFT RET   &mt RSHFT TAB &lt 1 SPACE &none
+&kp ESC       &kp Q       &kp W  &kp E              &kp R       &kp T          &kp C_MUTE  &kp C_PP  &kp Y          &kp U        &kp I             &kp O    &kp P     &kp MINUS
+&kp LEFT_ALT  &mt LALT A  &kp S  &kp D              &kp F       &kp G          &kp LALT    &kp RALT  &kp H          &kp J        &kp K             &kp L    &kp SEMI  &kp SQT
+&kp LGUI      &kp Z       &kp X  &kp C              &kp V       &kp B                                &kp N          &kp M        &kp COMMA         &kp DOT  &kp FSLH  &kp BSLH
+                                 &kp LA(BACKSPACE)  &lt 2 BSPC  &mt LSHFT RET                        &mt RSHFT TAB  &lt 1 SPACE  &kp LEFT_CONTROL
             >;
+
             sensor-bindings = <
                 &inc_dec_kp C_VOL_DN C_VOL_UP
                 &inc_dec_kp PG_UP PG_DN
@@ -59,13 +58,14 @@
         // │ GUI │   │PRV│NXT│STP│PLY│           │PGD│ LEFT │ DOWN │ RIGHT│   │  │
         // └─────┴───┴───┼───┼───────┼───────────┼───┼──────┼───┘
         //               │ — │  ——   │    SPC    │ENT│ MO3  │ RALT │
+
         nav_layer {
             display-name = "NAV";
             bindings = <
-                &kp TAB   &kp N1 &kp N2     &kp N3     &kp N4   &kp N5   &trans &trans &kp N6    &kp N7   &kp N8   &kp N9    &kp N0 &kp BSPC
-                &kp LCTRL &none  &none      &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &trans &trans &kp PG_UP &kp HOME &kp UP   &kp END   &none  &none
-                &kp LGUI  &none  &kp C_PREV &kp C_NEXT &kp C_STOP  &kp C_PP                   &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &none  &none
-                                 &none      &trans     &kp SPACE               &kp RET &mo 3 &kp RALT
+&kp TAB    &kp N1  &kp N2      &kp N3      &kp N4        &kp N5        &trans  &trans  &kp N6     &kp N7    &kp N8    &kp N9     &kp N0  &kp BSPC
+&kp TILDE  &none   &none       &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &trans  &trans  &kp PG_UP  &kp HOME  &kp UP    &kp END    &none   &none
+&kp LGUI   &none   &kp C_PREV  &kp C_NEXT  &kp C_STOP    &kp C_PP                      &kp PG_DN  &kp LEFT  &kp DOWN  &kp RIGHT  &none   &none
+                               &none       &trans        &kp SPACE                     &kp RET    &mo 3     &kp RALT
             >;
         };
 
@@ -77,84 +77,86 @@
         // │LSFT │   │   │   │   │   │           │ _ │ + │ { │ } │ | │ ~ │
         // └─────┴───┴───┼───┼───────┼───────────┼───┼───┼───┘
         //               │ — │ MO3   │    SPC    │ENT│ ——│ RALT │
+
         sym_layer {
             display-name = "SYM";
             bindings = <
-                &kp TAB   &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT &trans &trans &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-                &kp LCTRL &none    &none  &none    &none    &none     &trans &trans &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
-                &kp LSHFT &none    &none  &none    &none    &none                  &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
-                                   &none  &mo 3    &kp SPACE               &kp RET &trans &kp RALT
+&kp TAB    &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &trans  &trans  &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
+&kp LCTRL  &none     &none   &none     &none     &none      &trans  &trans  &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
+&kp LSHFT  &none     &none   &none     &none     &none                      &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
+                             &none     &mo 3     &kp SPACE                  &kp RET    &trans     &kp RALT
             >;
         };
 
         // RGB controls + boot (reached by holding both layer keys simultaneously)
+
         sys_layer {
             display-name = "SYS";
             bindings = <
-                &bootloader     &none           &none           &none           &none &none &trans &trans &none &none &none &none &none &none
-                &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &none &none &trans &trans &none &none &none &none &none &none
-                &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &none &none              &none &none &none &none &none &studio_unlock
-                                                &kp LGUI        &trans          &kp SPACE     &kp RET &trans &kp RALT
+&bootloader      &none            &none            &none            &none   &none      &trans  &trans  &none    &none   &none     &none  &none  &none
+&rgb_ug RGB_TOG  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &none   &none      &trans  &trans  &none    &none   &none     &none  &none  &none
+&rgb_ug RGB_EFF  &rgb_ug RGB_HUD  &rgb_ug RGB_SAD  &rgb_ug RGB_BRD  &none   &none                      &none    &none   &none     &none  &none  &studio_unlock
+                                                   &kp LGUI         &trans  &kp SPACE                  &kp RET  &trans  &kp RALT
             >;
         };
 
         extra_layer_1 {
             display-name = "EXTRA 1";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_2 {
             display-name = "EXTRA 2";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_3 {
             display-name = "EXTRA 3";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_4 {
             display-name = "EXTRA 4";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_5 {
             display-name = "EXTRA 5";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_6 {
             display-name = "EXTRA 6";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
     };
